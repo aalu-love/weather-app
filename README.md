@@ -1,5 +1,7 @@
 # [Weather API Form](https://aalu-love.github.io/weather-app/)
 
+<img src="https://github.com/aalu-love/weather-app/blob/master/photo/photo.png" alt="#" height="500px" />
+
 This is a simple web application that fetches weather data from the WeatherAPI based on user input. The application allows users to enter a location and retrieve the current weather conditions for that location.
 
 ## Usage
