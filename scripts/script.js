@@ -6,6 +6,7 @@ const weatherResult = document.getElementById("weatherResult");
 
 form.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission
+    weatherResult.classList.remove('showed-up');
 
     const location = locationInput.value;
     const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`;
@@ -22,14 +23,14 @@ form.addEventListener("submit", function (event) {
             if (data.error) {
                 throw new Error(data.error.message);
             }
-
             // Extract and use the data as needed
             const { current, location } = data
             const { temp_c, temp_f, condition, wind_mph, wind_kph, humidity, vis_km } = current;
             const { country, lat, localtime, localtime_epoch, lon, name, region, tz_id } = location;
 
             // Display the weather result
-            weatherResult.style.display = "block"; // Show the weather result element
+            weatherResult.classList.remove('warning');
+            weatherResult.classList.add('showed-up');
             weatherResult.innerHTML = `
         <p>Temperature: ${temp_c}°C (${temp_f}°F)</p>
         <p>Condition: ${condition?.text}</p>
@@ -43,7 +44,8 @@ form.addEventListener("submit", function (event) {
         })
         .catch(error => {
             // Handle the error
-            weatherResult.style.display = "block"; // Show the weather result element
+            weatherResult.classList.add('showed-up');
+            weatherResult.classList.add('warning');
             weatherResult.innerHTML = `<p>Error: ${error.message}</p>`;
             console.error("Error fetching weather data:", error);
         });
