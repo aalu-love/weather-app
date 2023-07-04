@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "DM Mono", monospace;
+  --primaryColor: #22a699;
+  --secondaryColor: #f2be22;
+  --secondarySecondColor: #f29727;
+  --lastColor: #f24c3d;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--primaryColor);
+}
+
+.centered {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 100vh;
+  width: 100vw;
+}
+
+.weather-wrapper {
+  .search {
+    width: 270px;
+    margin: 2rem auto;
+    padding: 8px;
+    background-color: var(--secondaryColor);
+    font-weight: 800;
+    text-align: center;
+    border-radius: 5px;
+    outline: transparent;
+  }
+}
+
+button {
+  background: var(--secondarySecondColor);
+  padding: 8px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #ff8c00;
+    color: #fff;
+    transform: translateY(-5%);
+    box-shadow: 0 0 5px black;
+  }
+}
+
+.search:focus-visible {
+  outline-color: transparent;
+}
+
+.container {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#weatherForm {
+  display: flex;
+  align-items: center;
+
+  span {
+    padding-inline: 5px;
+  }
+
+  input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-inline: 5px;
+  }
+}
+
+.warning {
+  color: var(--lastColor) !important;
+  font-weight: 800;
+  height: 50px !important;
+}
+
+.weatherResult {
+  text-align: center;
+  display: none;
+  opacity: 0;
+  display: flex;
+
+  .bi {
+    font-size: 2rem;
+    left: 29px;
+    position: absolute;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .location {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &.showed-up {
+    display: block !important;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 370px;
+    padding: 2%;
+    animation: slide-in 350ms ease forwards;
+  }
+
+  .weather-image {
+    .image-container {
+      padding-block: 2%;
+      padding-bottom: 0;
+      img {
+        height: 250px;
+        width: 250px;
+      }
+    }
+    .temprature {
+      position: relative;
+      top: -20px;
+    }
+  }
+
+  .rest {
+    .rest-input {
+      display: flex;
+      margin-inline: 12px;
+      padding-block: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateY(-10%);
+    height: 20px;
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    height: 640px;
+    opacity: 1;
+  }
+}
