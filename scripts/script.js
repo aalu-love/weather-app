@@ -1,54 +1,50 @@
 const apiKey = "ef530fc0919d4b27adc122308230307";
 const form = document.getElementById("weatherForm");
 const locationInput = document.getElementById("locationInput");
-// const aqiInput = document.getElementById("aqi");
+const weatherForcastWrapper = document.getElementById("weather-forcast");
 const weatherResult = document.getElementById("weatherResult");
 
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", async (event) => {
     event.preventDefault(); // Prevent form submission
     weatherResult.classList.remove('showed-up');
 
     const location = locationInput.value;
-    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`;
+    const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=7`;
 
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("API request failed");
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Check if the API returned an error
-            if (data.error) {
-                throw new Error(data.error.message);
-            }
-            // Extract and use the data as needed
-            const { current, location } = data
-            const { temp_c, temp_f, condition, wind_mph, wind_kph, humidity, vis_km } = current;
-            const { country, lat, localtime, localtime_epoch, lon, name, region, tz_id } = location;
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error("API request failed");
+        }
+        const data = await response.json();
 
-            // Display the weather result
-            weatherResult.classList.remove('warning');
-            weatherResult.classList.add('showed-up');
-            weatherResult.innerHTML = cardComponent(data);
-        })
-        .catch(error => {
-            // Handle the error
-            weatherResult.classList.add('showed-up');
-            weatherResult.classList.add('warning');
-            weatherResult.innerHTML = `<p>Error: ${error.message}</p>`;
-            console.error("Error fetching weather data:", error);
-        });
+        // Check if the API returned an error
+        if (data.error) {
+            throw new Error(data.error.message);
+        }
+
+        // Extract and use the data as needed
+        const { forecast, current, location } = data;
+
+        // Display the weather result
+        weatherResult.classList.remove('warning');
+        weatherResult.classList.add('showed-up');
+        weatherResult.innerHTML = cardComponent(current, location);
+        weatherForcastWrapper.innerHTML = weatherForcast(forecast);
+    } catch (error) {
+        // Handle the error
+        weatherResult.classList.add('showed-up');
+        weatherResult.classList.add('warning');
+        weatherResult.innerHTML = `<p>Error: ${error.message}</p>`;
+        console.error("Error fetching weather data:", error);
+    }
 });
 
-
-function cardComponent(data) {
-    const { current, location } = data
+function cardComponent(current, location) {
     const { temp_c, temp_f, condition, wind_mph, wind_kph, humidity, vis_km } = current;
-    const { country, lat, localtime, localtime_epoch, lon, name, region, tz_id } = location;
+    const { country, region } = location;
     return `
-            <span>
+        <span>
             <i class="bi bi-geo-alt"></i>
             <div class="location">
                 <p>${country}</p>
@@ -67,15 +63,38 @@ function cardComponent(data) {
         <div class="rest">
             <div class="rest-input">
                 <span class="label">Wind</span>
-                <spn class="value">${wind_mph} mph (${wind_kph} kph)</spn>
+                <span class="value">${wind_mph} mph (${wind_kph} kph)</span>
             </div>
             <div class="rest-input">
-                <span class="label">WiHumiditynd</span>
-                <spn class="value">${humidity}%</spn>
+                <span class="label">Humidity</span>
+                <span class="value">${humidity}%</span>
             </div>
             <div class="rest-input">
                 <span class="label">Visibility</span>
-                <spn class="value">${vis_km}km</spn>
+                <span class="value">${vis_km}km</span>
             </div>
         </div>`;
+}
+
+function weatherForcast({ forecastday }) {
+    const Week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const day = (date) => {
+        const todayDate = new Date().getDay();
+        const getDay = new Date(date).getDay();
+        return getDay === todayDate ? 'Now' : Week[getDay];
+    };
+
+    return forecastday?.map((i) => `
+        <div class="forcast">
+            <span>
+                <p>${day(i?.date)}</p>
+            </span>
+            <div class="forcast-image-container">
+                <img src=${i?.day?.condition?.icon} />
+            </div>
+            <span class="temprature">
+                <p>${i?.day?.avgtemp_c}°C</p>
+            </span>
+        </div>`
+    ).join('');
 }

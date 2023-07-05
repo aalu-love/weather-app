@@ -35,121 +35,148 @@ body {
     border-radius: 5px;
     outline: transparent;
   }
-}
 
-button {
-  background: var(--secondarySecondColor);
-  padding: 8px;
-  border-radius: 5px;
+  button {
+    background: var(--secondarySecondColor);
+    padding: 8px;
+    border-radius: 5px;
 
-  &:hover {
-    background-color: #ff8c00;
-    color: #fff;
-    transform: translateY(-5%);
-    box-shadow: 0 0 5px black;
-  }
-}
-
-.search:focus-visible {
-  outline-color: transparent;
-}
-
-.container {
-  padding-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#weatherForm {
-  display: flex;
-  align-items: center;
-
-  span {
-    padding-inline: 5px;
+    &:hover {
+      background-color: #ff8c00;
+      color: #fff;
+      transform: translateY(-5%);
+      box-shadow: 0 0 5px black;
+    }
   }
 
-  input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    margin-inline: 5px;
-  }
-}
-
-.warning {
-  color: var(--lastColor) !important;
-  font-weight: 800;
-  height: 50px !important;
-}
-
-.weatherResult {
-  text-align: center;
-  display: none;
-  opacity: 0;
-  display: flex;
-
-  .bi {
-    font-size: 2rem;
-    left: 29px;
-    position: absolute;
+  .search:focus-visible {
+    outline-color: transparent;
   }
 
-  span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .location {
+  .container {
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  &.showed-up {
-    display: block !important;
-    background-color: #fff;
-    border-radius: 5px;
-    width: 370px;
-    padding: 2%;
-    animation: slide-in 350ms ease forwards;
+  #weatherForm {
+    display: flex;
+    align-items: center;
+
+    span {
+      padding-inline: 5px;
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-inline: 5px;
+    }
   }
 
-  .weather-image {
-    .image-container {
-      padding-block: 2%;
-      padding-bottom: 0;
-      img {
-        height: 250px;
-        width: 250px;
+  .warning {
+    color: var(--lastColor) !important;
+    font-weight: 800;
+    height: 50px !important;
+  }
+
+  .weatherResult {
+    text-align: center;
+    display: none;
+    opacity: 0;
+    display: flex;
+
+    .bi {
+      font-size: 2rem;
+      left: 29px;
+      position: absolute;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .location {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &.showed-up {
+      display: block !important;
+      background-color: #fff;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      width: 910px;
+      padding: 2%;
+      animation: slide-in 350ms ease forwards;
+    }
+
+    .weather-image {
+      display: flex;
+      justify-content: center;
+      .image-container {
+        img {
+          scale: 1.2;
+        }
       }
     }
-    .temprature {
-      position: relative;
-      top: -20px;
+
+    .rest {
+      .rest-input {
+        display: flex;
+        margin-inline: 12px;
+        padding-block: 8px;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
   }
 
-  .rest {
-    .rest-input {
+  @keyframes slide-in {
+    0% {
+      transform: translateY(-10%);
+      height: 20px;
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0%);
+      height: 200px;
+      opacity: 1;
+    }
+  }
+
+  .weather-forcast-wrapper {
+    display: inline-grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 52px;
+    grid-auto-rows: minmax(100px, auto);
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    .forcast {
       display: flex;
-      margin-inline: 12px;
-      padding-block: 8px;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      background-color: #fff;
+      padding: 20%;
+      border-radius: 5px;
+      height: 144px;
+      width: 92px;
+      .forcast-image-container {
+        img {
+          padding: 2%;
+          scale: 1.5;
+        }
+      }
+      p {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
     }
-  }
-}
-
-@keyframes slide-in {
-  0% {
-    transform: translateY(-10%);
-    height: 20px;
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0%);
-    height: 640px;
-    opacity: 1;
   }
 }
