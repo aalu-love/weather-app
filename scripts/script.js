@@ -77,12 +77,14 @@ function cardComponent(current, location) {
 }
 
 function weatherForcast({ forecastday }) {
-    const Week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const Week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const day = (date) => {
         const todayDate = new Date().getDay();
         const getDay = new Date(date).getDay();
         return getDay === todayDate ? 'Now' : Week[getDay];
     };
+
+    console.log(forecastday);
 
     return forecastday?.map((i) => `
         <div class="forcast">
