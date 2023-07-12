@@ -84,8 +84,6 @@ function weatherForcast({ forecastday }) {
         return getDay === todayDate ? 'Now' : Week[getDay];
     };
 
-    console.log(forecastday);
-
     return forecastday?.map((i) => `
         <div class="forcast">
             <span>
