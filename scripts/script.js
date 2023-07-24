@@ -7,6 +7,7 @@ const weatherResult = document.getElementById("weatherResult");
 form.addEventListener("submit", async (event) => {
     event.preventDefault(); // Prevent form submission
     weatherResult.classList.remove('showed-up');
+    weatherForcastWrapper.style.display = 'none';
 
     const location = locationInput.value;
     const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=7`;
@@ -29,6 +30,7 @@ form.addEventListener("submit", async (event) => {
         // Display the weather result
         weatherResult.classList.remove('warning');
         weatherResult.classList.add('showed-up');
+        weatherForcastWrapper.style.display = 'inline-grid';
         weatherResult.innerHTML = cardComponent(current, location);
         weatherForcastWrapper.innerHTML = weatherForcast(forecast);
     } catch (error) {

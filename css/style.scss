@@ -150,7 +150,7 @@ body {
   }
 
   .weather-forcast-wrapper {
-    display: inline-grid;
+    display: none;
     grid-template-columns: repeat(7, 1fr);
     gap: 52px;
     grid-auto-rows: minmax(100px, auto);
